@@ -17,12 +17,11 @@ public class BerlinClock extends JFrame {
 
 	private JPanel contentPane;
 	private SecondsPanel secondsPanel;
-	private Thread secondsThread;
 	private HoursTopPanel[] hoursTopPanels;
 	private HoursBottomPanel[] hoursBottomPanels;
 	private MinutesTopPanel[] minutesTopPanels;
 	private MinutesBottomPanel[] minutesBottomPanels;
-	private String timeZoneStr = "Europe/Berlin";
+	private String timeZoneStr = "IST";//"Europe/Berlin";
 
 	/**
 	 * Launch the application.
@@ -32,9 +31,7 @@ public class BerlinClock extends JFrame {
 			public void run() {
 				try {
 					BerlinClock clock = new BerlinClock();
-					clock.secondsPanel.setClock(clock);
-					clock.secondsThread = new Thread((Runnable)clock.secondsPanel);
-					clock.secondsThread.start();
+					new Thread(new Ticker(clock)).start();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -55,8 +52,15 @@ public class BerlinClock extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(designContentPane());
+		// Design Group Layout
+		GroupLayout groupLayout = designGroupLayout();
+		contentPane.setLayout(groupLayout);
+
 		this.setVisible(true);
+	}
+
+	SecondsPanel getSecondsPanel() {
+		return secondsPanel;
 	}
 
 	HoursTopPanel[] getHoursTopPanels() {
@@ -80,7 +84,9 @@ public class BerlinClock extends JFrame {
 	}
 
 
-	private GroupLayout designContentPane() {
+	private GroupLayout designGroupLayout() {
+
+		secondsPanel = new SecondsPanel();
 
 		HoursTopPanel topHour1 = new HoursTopPanel(FourPosition.FIRST);
 		HoursTopPanel topHour2 = new HoursTopPanel(FourPosition.SECOND);
@@ -113,8 +119,6 @@ public class BerlinClock extends JFrame {
 		MinutesBottomPanel minutesBottomPanel3 = new MinutesBottomPanel(FourPosition.THIRD);
 		MinutesBottomPanel minutesBottomPanel4 = new MinutesBottomPanel(FourPosition.FOURTH);
 		minutesBottomPanels = new MinutesBottomPanel[] { minutesBottomPanel1, minutesBottomPanel2, minutesBottomPanel3, minutesBottomPanel4 };
-
-		secondsPanel = new SecondsPanel();
 
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(

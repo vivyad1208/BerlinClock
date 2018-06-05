@@ -5,6 +5,7 @@ import java.awt.event.WindowEvent;
 
 public class CloseEvent extends WindowAdapter {
 
+	@SuppressWarnings("unused")
 	private BerlinClock clock;
 
 	public CloseEvent(BerlinClock clock) {
@@ -13,6 +14,6 @@ public class CloseEvent extends WindowAdapter {
 
 	@Override
 	public void windowClosing(WindowEvent e) {
-		System.out.println(clock);
+		System.out.println("Berlin Clock Closing!");
 	}
 }

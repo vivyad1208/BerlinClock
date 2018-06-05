@@ -38,19 +38,14 @@ public class CurvedPanel extends JPanel {
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         // Draws the rounded panel with borders.
-        setColor(backgroundColor);
+
+		graphics.setColor(backgroundColor);
+    	graphics.fillRoundRect(0, 0, width-1, height-1, arcs.width, arcs.height); //paint background
+
+        graphics.setColor(Color.BLACK);
+        graphics.drawRoundRect(0, 0, width-1, height-1, arcs.width, arcs.height); //paint border
 
         painted = true;
-    }
-
-    public void setColor(Color color) {
-    	if(graphics!=null) {
-    		graphics.setColor(color);
-	    	graphics.fillRoundRect(0, 0, width-1, height-1, arcs.width, arcs.height); //paint background
-
-	        graphics.setColor(Color.BLACK);
-	        graphics.drawRoundRect(0, 0, width-1, height-1, arcs.width, arcs.height); //paint border
-    	}
     }
 
     public boolean isPainted() {

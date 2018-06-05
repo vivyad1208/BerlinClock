@@ -5,40 +5,66 @@ import java.util.Calendar;
 public class SetTime {
 
 
-	public synchronized void setMinutesTop(BerlinClock clock, Calendar cal) {
+	// Apply @Test
+	public synchronized boolean[] setMinutes(Calendar cal, MinutesTopPanel[] minutesTopPanels, boolean repaint) {
+		boolean[] activeMinutePanels = new boolean[minutesTopPanels.length];
 		int minute = cal.get(Calendar.MINUTE);
-		MinutesTopPanel[] minutesTopPanels = clock.getMinutesTopPanels();
 		for (int i = 0; i < minutesTopPanels.length; i++) {
-			minutesTopPanels[i].backgroundColor = i<minute/5 ? MinutesTopPanel.activeColor : MinutesTopPanel.defaultColor;
-			minutesTopPanels[i].repaint();
+			boolean active = i<minute/5;
+			if(repaint) {
+				minutesTopPanels[i].backgroundColor = active ? MinutesTopPanel.activeColor : CurvedPanel.defaultColor;
+				minutesTopPanels[i].repaint();
+			}
+			activeMinutePanels[i] = active;
 		}
-		// Bottom Panel Execution
-		setMinutesBottom(cal, clock.getMinutesBottomPanels(), minute);
+		return activeMinutePanels;
 	}
 
 
-	public void setMinutesBottom(Calendar cal, MinutesBottomPanel[] minutesBottomPanels, int minute) {
+	// Apply @Test
+	public synchronized boolean[] setMinutesBottom(Calendar cal, MinutesBottomPanel[] minutesBottomPanels, boolean repaint) {
+		boolean[] activeMinutePanels = new boolean[minutesBottomPanels.length];
+		int minute = cal.get(Calendar.MINUTE);
 		for (int i = 0; i < minutesBottomPanels.length; i++) {
-			minutesBottomPanels[i].backgroundColor = (minute%5==0 || minute%5<i+1) ? MinutesBottomPanel.defaultColor : MinutesBottomPanel.activeColor;
-			minutesBottomPanels[i].repaint();
+			boolean active = (minute%5!=0 && minute%5>i);
+			if(repaint) {
+				minutesBottomPanels[i].backgroundColor = active ?  MinutesTopPanel.activeColor : CurvedPanel.defaultColor;
+				minutesBottomPanels[i].repaint();
+			}
+			activeMinutePanels[i] = active;
 		}
+		return activeMinutePanels;
 	}
 
-	public synchronized void setHoursTop(BerlinClock clock, Calendar cal) {
+
+	// Apply @Test
+	public synchronized boolean[] setHours(Calendar cal, HoursTopPanel[] hoursTopPanels, boolean repaint) {
+		boolean[] activeHoursPanels = new boolean[hoursTopPanels.length];
 		int hourOfDay = cal.get(Calendar.HOUR_OF_DAY);
-		HoursTopPanel[] hoursTopPanels = clock.getHoursTopPanels();
 		for (int i = 0; i < hoursTopPanels.length; i++) {
-			hoursTopPanels[i].backgroundColor = i<hourOfDay/5 ? HoursTopPanel.activeColor : HoursTopPanel.defaultColor;
-			hoursTopPanels[i].repaint();
+			boolean active = i<hourOfDay/5;
+			if(repaint) {
+				hoursTopPanels[i].backgroundColor = active ? HoursTopPanel.activeColor : CurvedPanel.defaultColor;
+				hoursTopPanels[i].repaint();
+			}
+			activeHoursPanels[i] = active;
 		}
-		// Bottom Panel Execution
-		setHoursBottom(cal, clock.getHoursBottomPanels(), hourOfDay);
+		return activeHoursPanels;
 	}
 
-	public void setHoursBottom(Calendar cal, HoursBottomPanel[] hourBottomPanels, int hourOfDay) {
+
+	// Apply @Test
+	public synchronized boolean[] setHoursBottom(Calendar cal, HoursBottomPanel[] hourBottomPanels, boolean repaint) {
+		boolean[] activeHoursPanels = new boolean[hourBottomPanels.length];
+		int hourOfDay = cal.get(Calendar.HOUR_OF_DAY);
 		for (int i = 0; i < hourBottomPanels.length; i++) {
-			hourBottomPanels[i].backgroundColor = (hourOfDay%5==0 || hourOfDay%5<i+1) ? HoursBottomPanel.defaultColor : HoursBottomPanel.activeColor;
-			hourBottomPanels[i].repaint();
+			boolean active = (hourOfDay%5!=0 && hourOfDay%5>i);
+			if(repaint) {
+				hourBottomPanels[i].backgroundColor = active ? HoursTopPanel.activeColor : CurvedPanel.defaultColor;
+				hourBottomPanels[i].repaint();
+			}
+			activeHoursPanels[i] = active;
 		}
+		return activeHoursPanels;
 	}
 }
