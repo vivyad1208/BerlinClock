@@ -18,9 +18,9 @@ public class CurvedPanel extends JPanel {
     private int cornerRadius = 15;
     private Graphics2D graphics;
     private boolean painted = false;
-    int width;
-    int height;
-    Dimension arcs;
+    private int width;
+    private int height;
+    private Dimension arcs;
 
     public CurvedPanel(int radius, Color bgColor) {
         super();

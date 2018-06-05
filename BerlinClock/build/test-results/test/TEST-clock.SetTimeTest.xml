@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="clock.SetTimeTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2018-06-05T17:24:26" hostname="Vivek-PC" time="0.019">
+  <properties/>
+  <testcase name="testHoursBottom" classname="clock.SetTimeTest" time="0.005"/>
+  <testcase name="testHoursTop_Case2" classname="clock.SetTimeTest" time="0.001"/>
+  <testcase name="testHoursTop" classname="clock.SetTimeTest" time="0.0"/>
+  <testcase name="testMinutesBottom_Case2" classname="clock.SetTimeTest" time="0.0"/>
+  <testcase name="testMinutesTop_Case2" classname="clock.SetTimeTest" time="0.0"/>
+  <testcase name="testMinutesBottom" classname="clock.SetTimeTest" time="0.0"/>
+  <testcase name="testMinutesTop" classname="clock.SetTimeTest" time="0.0"/>
+  <testcase name="testHoursBottom_Case2" classname="clock.SetTimeTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

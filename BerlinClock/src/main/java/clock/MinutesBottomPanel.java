@@ -1,6 +1,7 @@
 package clock;
 
 import java.awt.Color;
+import java.awt.Graphics;
 
 public class MinutesBottomPanel extends CurvedPanel {
 
@@ -15,6 +16,11 @@ public class MinutesBottomPanel extends CurvedPanel {
 		super(15, defaultColor);
 		setOpaque(false);
 		this.pos = pos;
+	}
+
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
 	}
 
 }

@@ -11,6 +11,15 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.CardLayout;
 
+
+/**
+ * Berlin clock implementation Swing's JFrame.
+ * Concurrent thread implementation.
+ * Separate Ticker thread maintains the working of clock.
+ * 
+ * @author Vivek
+ *
+ */
 public class BerlinClock extends JFrame {
 
 	private static final long serialVersionUID = -2588206039237848330L;
@@ -21,7 +30,7 @@ public class BerlinClock extends JFrame {
 	private HoursBottomPanel[] hoursBottomPanels;
 	private MinutesTopPanel[] minutesTopPanels;
 	private MinutesBottomPanel[] minutesBottomPanels;
-	private String timeZoneStr = "IST";//"Europe/Berlin";
+	private String timeZoneStr = "Europe/Berlin";
 
 	/**
 	 * Launch the application.
@@ -56,7 +65,19 @@ public class BerlinClock extends JFrame {
 		GroupLayout groupLayout = designGroupLayout();
 		contentPane.setLayout(groupLayout);
 
+		// Set Not Resizable
 		this.setVisible(true);
+	}
+
+
+	/**
+	 * Create the frame.
+	 */
+	public BerlinClock(boolean designContentPane) {
+		hoursTopPanels = new HoursTopPanel[4];
+		hoursBottomPanels = new HoursBottomPanel[4];
+		minutesTopPanels = new MinutesTopPanel[11];
+		minutesBottomPanels = new MinutesBottomPanel[4];
 	}
 
 	SecondsPanel getSecondsPanel() {
@@ -84,6 +105,10 @@ public class BerlinClock extends JFrame {
 	}
 
 
+	/**
+	 * Clock Design
+	 * @return GroupLayout
+	 */
 	private GroupLayout designGroupLayout() {
 
 		secondsPanel = new SecondsPanel();

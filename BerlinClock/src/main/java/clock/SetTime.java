@@ -1,16 +1,28 @@
 package clock;
 
-import java.util.Calendar;
 
+/**
+ * Class Responsible for setting the time on respective panels of the Berlin clock.
+ * The methods of this class are synchronized due to calling of repaint method.
+ * @author Vivek
+ */
 public class SetTime {
 
+	private boolean repaint = true;
 
+	public SetTime() {}
+	
+	public SetTime(boolean paint) {
+		repaint = paint;
+	}
+	
 	// Apply @Test
-	public synchronized boolean[] setMinutes(Calendar cal, MinutesTopPanel[] minutesTopPanels, boolean repaint) {
+	public synchronized boolean[] minutesTop(MinutesTopPanel[] minutesTopPanels, int minutes) {
+		checkMinute(minutes);
+
 		boolean[] activeMinutePanels = new boolean[minutesTopPanels.length];
-		int minute = cal.get(Calendar.MINUTE);
 		for (int i = 0; i < minutesTopPanels.length; i++) {
-			boolean active = i<minute/5;
+			boolean active = i < minutes/5;
 			if(repaint) {
 				minutesTopPanels[i].backgroundColor = active ? MinutesTopPanel.activeColor : CurvedPanel.defaultColor;
 				minutesTopPanels[i].repaint();
@@ -22,11 +34,12 @@ public class SetTime {
 
 
 	// Apply @Test
-	public synchronized boolean[] setMinutesBottom(Calendar cal, MinutesBottomPanel[] minutesBottomPanels, boolean repaint) {
+	public synchronized boolean[] minutesBottom(MinutesBottomPanel[] minutesBottomPanels, int minutes) {
+		checkMinute(minutes);
+
 		boolean[] activeMinutePanels = new boolean[minutesBottomPanels.length];
-		int minute = cal.get(Calendar.MINUTE);
 		for (int i = 0; i < minutesBottomPanels.length; i++) {
-			boolean active = (minute%5!=0 && minute%5>i);
+			boolean active = (minutes%5!=0 && minutes%5>i);
 			if(repaint) {
 				minutesBottomPanels[i].backgroundColor = active ?  MinutesTopPanel.activeColor : CurvedPanel.defaultColor;
 				minutesBottomPanels[i].repaint();
@@ -38,11 +51,12 @@ public class SetTime {
 
 
 	// Apply @Test
-	public synchronized boolean[] setHours(Calendar cal, HoursTopPanel[] hoursTopPanels, boolean repaint) {
+	public synchronized boolean[] hoursTop(HoursTopPanel[] hoursTopPanels, int hours) {
+		checkHour(hours);
+
 		boolean[] activeHoursPanels = new boolean[hoursTopPanels.length];
-		int hourOfDay = cal.get(Calendar.HOUR_OF_DAY);
 		for (int i = 0; i < hoursTopPanels.length; i++) {
-			boolean active = i<hourOfDay/5;
+			boolean active = i<hours/5;
 			if(repaint) {
 				hoursTopPanels[i].backgroundColor = active ? HoursTopPanel.activeColor : CurvedPanel.defaultColor;
 				hoursTopPanels[i].repaint();
@@ -54,17 +68,32 @@ public class SetTime {
 
 
 	// Apply @Test
-	public synchronized boolean[] setHoursBottom(Calendar cal, HoursBottomPanel[] hourBottomPanels, boolean repaint) {
-		boolean[] activeHoursPanels = new boolean[hourBottomPanels.length];
-		int hourOfDay = cal.get(Calendar.HOUR_OF_DAY);
-		for (int i = 0; i < hourBottomPanels.length; i++) {
-			boolean active = (hourOfDay%5!=0 && hourOfDay%5>i);
+	public synchronized boolean[] hoursBottom(HoursBottomPanel[] hoursBottomPanels, int hours) {
+		checkHour(hours);
+
+		boolean[] activeHoursPanels = new boolean[hoursBottomPanels.length];
+		for (int i = 0; i < hoursBottomPanels.length; i++) {
+			boolean active = (hours%5!=0 && hours%5>i);
 			if(repaint) {
-				hourBottomPanels[i].backgroundColor = active ? HoursTopPanel.activeColor : CurvedPanel.defaultColor;
-				hourBottomPanels[i].repaint();
+				hoursBottomPanels[i].backgroundColor = active ? HoursTopPanel.activeColor : CurvedPanel.defaultColor;
+				hoursBottomPanels[i].repaint();
 			}
 			activeHoursPanels[i] = active;
 		}
 		return activeHoursPanels;
+	}
+
+
+	public boolean checkMinute(int minutes) {
+		if(minutes>60)
+			throw new IllegalArgumentException(new StringBuilder("Minutes cannot be greater then 60.[").append(minutes).append("]").toString());
+		return true;
+	}
+
+
+	public boolean checkHour(int hours) {
+		if(hours>24)
+			throw new IllegalArgumentException(new StringBuilder("Hours cannot be greater then 24.[").append(hours).append("]").toString());
+		return true;
 	}
 }
